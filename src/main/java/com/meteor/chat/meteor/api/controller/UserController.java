@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,17 +25,28 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public User getUser(@RequestParam Integer id){
+    public User getUser(@RequestParam Integer id) {
         Optional user = userService.getUser(id);
         if(user.isPresent()){
             return (User) user.get();
         }
         return null;
     }
+    @GetMapping("/allusers")
+    public ArrayList<User> getAllUser() {
+        Optional users = userService.getAllUsers();
+        return (ArrayList<User>) users.get();
+    }
 
     @PutMapping("/logup")
     public Retcode logup(@RequestParam String name, @RequestParam String lastName, @RequestParam String nickname, @RequestParam String password, @RequestParam String email){
         Optional retcode = userService.setUser(name, lastName, nickname, password, email);
+        return (Retcode) retcode.get();
+    }
+
+    @PutMapping("/login")
+    public Retcode login(@RequestParam String nickname, @RequestParam String password){
+        Optional retcode = userService.loginUser(nickname, password);
         return (Retcode) retcode.get();
     }
 

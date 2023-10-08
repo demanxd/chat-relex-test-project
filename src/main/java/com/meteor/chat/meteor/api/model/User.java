@@ -20,6 +20,17 @@ public class User {
         this.email    = email;
     }
 
+    public User() {
+
+    }
+
+    public boolean isEmpty() {
+        if (this.name.isEmpty())
+            return true;
+        else
+            return false;
+    }
+
 
     public String getPassword() {
         return password;
